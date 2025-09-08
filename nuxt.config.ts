@@ -23,6 +23,6 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    mongooseConnectionString: process.env.MONGOOSE_CONNECTION_STRING
+    mongooseConnectionString:''
   }
 })
