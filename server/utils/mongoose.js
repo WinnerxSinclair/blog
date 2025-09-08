@@ -7,6 +7,7 @@ export const connectToDatabase = async () => {
 
   const config = useRuntimeConfig();
   try{
+    console.log(config.mongooseConnectionString);
     await mongoose.connect(config.mongooseConnectionString);
     isConnected = true;
     console.log('connect to db');
