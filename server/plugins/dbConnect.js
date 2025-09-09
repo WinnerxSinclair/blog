@@ -30,3 +30,5 @@
 // export default defineNitroPlugin(async (nitroApp) => {
 //   await connectToDatabase();
 // });
+
+export default defineNitroPlugin((nitroApp) => 'fuckyou')
