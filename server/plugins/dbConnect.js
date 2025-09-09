@@ -9,7 +9,7 @@ let isConnected = false;
 
 const connectToDatabase = async () => {
   if(isConnected) return;
-
+  //xd
   const config = useRuntimeConfig();
   try{
     const connectionString = config.mongooseConnectionString;
