@@ -18,9 +18,9 @@ export default defineNuxtConfig({
     classSuffix: ''
   },
 
-  // routeRules: {
-  //   '/**': { isr: true }
-  // },
+  routeRules: {
+    '/**': { isr: true }
+  },
 
   runtimeConfig: {
     mongooseConnectionString:''
