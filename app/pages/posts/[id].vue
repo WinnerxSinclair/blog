@@ -9,7 +9,7 @@ definePageMeta({
 })
 const route = useRoute();
 const { data: post } = await useFetch(`/api/blogs/${route.params.id}`);
-console.log(post.value);
+
 
 const componentMap = {
   'title': Title,

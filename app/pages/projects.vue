@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { data: projectDocs } = await useFetch(`/api/blogs?type=project`)
-console.log(projectDocs.value);
 </script>
 
 <template>

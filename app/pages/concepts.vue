@@ -29,7 +29,7 @@ const filteredPosts = computed(() => {
   }
   return list;
 });
-console.log(conceptDocs.value);
+
 </script>
 
 <template>
