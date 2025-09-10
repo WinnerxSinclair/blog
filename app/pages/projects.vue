@@ -1,10 +1,65 @@
 <script setup lang="ts">
-const { data: projectDocs } = await useFetch(`/api/blogs?type=project`)
+const baseQuery = `/api/blogs?type=project`;
+const { data: projectDocs } = await useFetch(baseQuery);
+const { data: series } = await useFetch('/api/projects/series');
+
+
+const state = reactive({
+  sort: 'desc',
+  series: 'any'
+});
+
+const filteredPosts = computed(() => {
+  if(!projectDocs) return [];
+  let list = [...projectDocs.value];
+  if(state.sort === 'asc'){
+    list.sort((a,b) => {
+      if(a.createdAt < b.createdAt){
+        return -1;
+      }
+      if(a.createdAt > b.createdAt){
+        return 1;
+      }
+      return 0;
+    });
+  }
+
+  if(state.series !== 'any'){
+    list = list.filter((doc) => doc.series === state.series);
+  }
+  return list;
+});
+
 </script>
 
 <template>
   <div>
     <h1 class="tac">Projects</h1>
-    <PostCard :posts="projectDocs" url="projects" />
+
+    <div class="flex jc gap">
+      <div class="flex control">
+        <label for="sort-select">Sort</label>
+        <select name="sort" id="sort-select" v-model="state.sort">
+          <option value="desc" selected>Newest</option>
+          <option value="asc">Oldest</option>
+        </select>
+      </div>
+      <div class="flex control">
+        <label for="series-select">Series</label>
+        <select name="series-select" id="series-select" v-model="state.series">
+          <option value="any" selected>Any</option>
+          <option v-for="name in series" :key="name" :value="name">{{ name }}</option>
+          <option value="">No Series</option>
+        </select>
+      </div>
+    </div>
+
+    <PostCard :posts="filteredPosts" url="projects" />
   </div>
 </template>
+
+<style scoped>
+.control{
+  gap: .2rem;
+}
+</style>
