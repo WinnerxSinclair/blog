@@ -33,7 +33,7 @@ const modifiedPosts = computed(() => {
         </div>
         
         <p class="meta-description">
-          Learning TypeScript from 0 with a Vue+Vite Todo app.
+          {{ post.subtitle }}
         </p>
       </NuxtLink>  
     </li>
