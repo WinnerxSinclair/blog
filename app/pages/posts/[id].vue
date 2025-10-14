@@ -9,7 +9,15 @@ definePageMeta({
 })
 const route = useRoute();
 const { data: post } = await useFetch(`/api/blogs/${route.params.id}`);
+console.log(post.value)
 
+const { data: nextPost } = 
+  await useFetch(`/api/blogs/next`, {
+    query: { 
+      series: post.value.series,
+      seriesNumber: post.value.seriesNumber + 1
+    }
+  });
 
 const componentMap = {
   'title': Title,
@@ -36,6 +44,7 @@ const componentMap = {
         v-bind="comp"  
         :is="componentMap[comp.type]"    
       />
+      <NuxtLink v-if="nextPost" :to="nextPost.slug">{{ post.series }} #{{ post.seriesNumber }}: {{ nextPost.title }}</NuxtLink>
     </div>
   </div>
 </template>
