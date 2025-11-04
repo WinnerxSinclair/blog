@@ -4,6 +4,7 @@ import Paragraph from '~/components/Paragraph.vue';
 import List from '~/components/List.vue';
 import Code from '~/components/Code.vue';
 import Image from '~/components/Image.vue'
+import { formatDate } from '#imports';
 definePageMeta({
   alias: ['/concepts/:id', '/projects/:id'],
 })
@@ -19,6 +20,8 @@ const { data: nextPost } =
     }
   });
 
+console.log(nextPost.value);
+const formattedDate = formatDate(post.value.createdAt);
 const componentMap = {
   'title': Title,
   'paragraph': Paragraph,
@@ -33,6 +36,7 @@ const componentMap = {
     <div class="content-wrapper">
       <div class="head-wrap">
         <h1>{{ post.title }}</h1>
+        <div>{{ formattedDate }}</div>
         <div class="italics">{{ post.series }} #{{ post.seriesNumber }}</div>
         <div class="pad-1">{{ post.subtitle }}</div>
         <div class="flex gap">
@@ -44,7 +48,10 @@ const componentMap = {
         v-bind="comp"  
         :is="componentMap[comp.type]"    
       />
-      <NuxtLink v-if="nextPost" :to="nextPost.slug">{{ post.series }} #{{ post.seriesNumber }}: {{ nextPost.title }}</NuxtLink>
+      <div v-if="nextPost" class="next-post-wrap">
+        <div>Next in Series:</div>
+        <NuxtLink class="next-post-link" :to="nextPost.slug">{{ post.series }} #{{ post.seriesNumber + 1 }}: {{ nextPost.title }}</NuxtLink>
+      </div>
     </div>
   </div>
 </template>
@@ -70,5 +77,15 @@ const componentMap = {
 .head-wrap{
   padding-bottom: 2rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.815);
+}
+.next-post-wrap{
+  margin-top: 2rem;
+  display: inline-block;
+}
+.next-post-wrap > div{
+  font-weight: bold;
+}
+.next-post-link{
+  color: rgb(214, 112, 214);
 }
 </style>
